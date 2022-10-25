@@ -25,5 +25,7 @@ nameserver 192.168.0.1
 This DNS configuration [is vulnerable](https://github.com/alfredopalhares/openvpn-update-resolv-conf/issues/14) and any DNS leak tester will easily report your true IP address, despite the fact that the IP DNS was obtained from inside the VPN above. Thus, the effectiveness of VPN is limited only by the visible change of the external IP address (location). `NetworkManager` is also no exception and by default provides an insecure, vulnerable OpenVPN connection.  
   
 Therefore, the original script `update-resolv-conf.sh` it was modified in such a way that `resolvconf` is only used to return the settings of the original `/etc/resolv.conf`. Depending on the settings coming from the VPN server, the number of nameservers can be: 0 - absence (you need to replace with a pair of your own), 1 - the only DNS (you need to add another one of your own) and 1> - at least 2. In addition, when returning DNS settings, `systemd-resolved` can be used, and not `resolvconf`. I tried to take all this into account in this modification of the script - `update-resolv-conf-mageia.sh`.  
-  
+
+**Dependencies for OpenVPN:** resolvconf procps-ng
+
 **Note:** the script is already used in [OpenVPN-GUI](https://github.com/AKotov-dev/OpenVPN-GUI), [ProtonVPN-GUI](https://github.com/AKotov-dev/protonvpn-gui) and [Luntik](https://github.com/AKotov-dev/luntik). 
